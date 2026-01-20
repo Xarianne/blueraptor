@@ -45,14 +45,14 @@ COPY --from=ghcr.io/projectbluefin/common:latest /system_files /oci/common
 COPY --from=ghcr.io/ublue-os/brew:latest /system_files /oci/brew
 
 # Base Image - GNOME included
-FROM ghcr.io/ublue-os/silverblue-main:latest
+# FROM ghcr.io/ublue-os/silverblue-main:latest
 
 ## Alternative base images, no desktop included (uncomment to use):
 # FROM ghcr.io/ublue-os/base-main:latest    
 # FROM quay.io/centos-bootc/centos-bootc:stream10
 
 ## Alternative GNOME OS base image (uncomment to use):
-# FROM quay.io/gnome_infrastructure/gnome-build-meta:gnomeos-nightly
+FROM quay.io/gnome_infrastructure/gnome-build-meta:gnomeos-nightly
 
 ### /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
@@ -80,9 +80,8 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /ctx/build/09-terra-mesa.sh && \
-    /ctx/build/10-build.sh  && \
-    /ctx/build/20-hyprland-dms.sh
+    # /ctx/build/09-terra-mesa.sh && \
+    # /ctx/build/10-build.sh
     
 ### LINTING
 ## Verify final image and contents are correct.
