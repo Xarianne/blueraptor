@@ -161,10 +161,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Build image
-        id: build
-        run: sudo podman build -t "${IMAGE_NAME}:${DEFAULT_TAG}" -f ./Containerfile .
-
       - name: Rechunk Image
         run: |
           sudo podman run --rm --privileged \
@@ -174,9 +170,6 @@ jobs:
             rechunk --max-layers 96 \
             "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" \
             "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
-            
-      - name: Push to Registry
-        run: sudo podman push "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" "${IMAGE_REGISTRY}/${IMAGE_NAME}:${DEFAULT_TAG}"
 
       - name: Push To GHCR
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
