@@ -11,8 +11,7 @@
 #   - custom/ujust/README.md: localhost/your-name-here:stable (in bootc switch example)
 #
 # The project name defined here is the single source of truth for your
-# custom image's identity.
-# When changing it, update all references above
+# custom image's identity. When changing it, update all references above
 # to maintain consistency.
 ###############################################################################
 
@@ -20,8 +19,7 @@
 # MULTI-STAGE BUILD ARCHITECTURE
 ###############################################################################
 # This Containerfile follows the Bluefin architecture pattern as implemented in
-# @projectbluefin/distroless.
-# The architecture layers OCI containers together:
+# @projectbluefin/distroless. The architecture layers OCI containers together:
 #
 # 1. Context Stage (ctx) - Combines resources from:
 #    - Local build scripts and custom files
@@ -41,26 +39,30 @@ FROM scratch AS ctx
 
 COPY build /build
 COPY custom /custom
-# Copy from OCI containers to 
-# distinct subdirectories to avoid conflicts
+# Copy from OCI containers to distinct subdirectories to avoid conflicts
 # Note: Renovate can automatically update these :latest tags to SHA-256 digests for reproducibility
 COPY --from=ghcr.io/projectbluefin/common:latest /system_files /oci/common
 COPY --from=ghcr.io/ublue-os/brew:latest /system_files /oci/brew
 
-# --- STAGE 1: THE BUILDER ---
 # Base Image - GNOME included
-FROM ghcr.io/ublue-os/silverblue-main:latest AS builder
+FROM ghcr.io/ublue-os/silverblue-main:latest
+
+## Alternative base images, no desktop included (uncomment to use):
+# FROM ghcr.io/ublue-os/base-main:latest    
+# FROM quay.io/centos-bootc/centos-bootc:stream10
+
+## Alternative GNOME OS base image (uncomment to use):
+# FROM quay.io/gnome_infrastructure/gnome-build-meta:gnomeos-nightly
 
 ### /opt
 ## Some bootable images, like Fedora, have /opt symlinked to /var/opt, in order to
-## make it mutable/writable for users.
-## However, some packages write files to this directory,
+## make it mutable/writable for users. However, some packages write files to this directory,
 ## thus its contents might be wiped out when bootc deploys an image, making it troublesome for
-## some packages.
-## Eg, google-chrome, docker-desktop.
+## some packages. Eg, google-chrome, docker-desktop.
 ##
 ## Uncomment the following line if one desires to make /opt immutable and be able to be used
 ## by the package manager.
+
 # RUN rm /opt && mkdir /opt
 
 ### MODIFICATIONS
@@ -84,16 +86,3 @@ RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
 ### LINTING
 ## Verify final image and contents are correct.
 RUN bootc container lint
-
-# --- STAGE 2: THE CHUNKAH SPLITTER ---
-# This stage uses chunkah to analyze the rootfs from the 'builder' stage
-# and split it into content-based layers for better reuse.
-FROM quay.io/jlebon/chunkah AS chunkah-processor
-# We mount the 'builder' rootfs and pipe the output to an OCI archive
-RUN --mount=from=builder,src=/,target=/chunkah,ro \
-    --mount=type=bind,target=/run/src,rw \
-        chunkah build > /run/src/out.ociarchive
-
-# --- STAGE 3: THE FINAL IMAGE ---
-# This uses the "oci-archive trick" to finalize the image
-FROM oci-archive:out.ociarchive
