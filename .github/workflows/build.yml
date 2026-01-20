@@ -163,7 +163,7 @@ jobs:
           
       - name: Rechunk Image
         run: |
-          sudo podman run --rm --privileged \
+          podman run --rm --privileged \
             -v /var/lib/containers:/var/lib/containers \
             --entrypoint /usr/libexec/bootc-base-imagectl \
             "localhost/${IMAGE_NAME}:${DEFAULT_TAG}" \
@@ -172,8 +172,8 @@ jobs:
             "localhost/${IMAGE_NAME}:${DEFAULT_TAG}-rechunked"
     
           # Tag the rechunked image with the original tag
-          sudo podman tag "localhost/${IMAGE_NAME}:${DEFAULT_TAG}-rechunked" "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
-          sudo podman rmi "localhost/${IMAGE_NAME}:${DEFAULT_TAG}-rechunked"
+          podman tag "localhost/${IMAGE_NAME}:${DEFAULT_TAG}-rechunked" "localhost/${IMAGE_NAME}:${DEFAULT_TAG}"
+          podman rmi "localhost/${IMAGE_NAME}:${DEFAULT_TAG}-rechunked"
 
       - name: Push To GHCR
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
