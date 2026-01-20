@@ -24,12 +24,12 @@ echo "::endgroup::
 echo "::group:: Install Dank Material Shell"
 
 copr_install_isolated "avengemedia/danklinux" \
-    quickshell \
+    quickshell-git \
     dgop \
     dsearch
     
 copr_install_isolated "avengemedia/dms" \
-    dms 
+    dms-git 
     
 echo "Dank Material Shell installed successfully"
 echo "::endgroup::
