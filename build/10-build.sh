@@ -44,10 +44,23 @@ echo "::endgroup::"
 echo "::group:: Install Packages"
 
 # Install packages using dnf5
-# Example: dnf5 install -y tmux
+dnf5 install -y \
+  goverlay \
+  steam \
+  mangohud \
+  vkBasalt \
+  firefox
 
 # Example using COPR with isolated pattern:
 # copr_install_isolated "ublue-os/staging" package-name
+copr_install_isolated "bieszczaders/kernel-cachyos-addons" \
+    scx-scheds \
+    scx-tools \
+    scx-manager 
+
+copr_install_isolated "xariann/tools" \
+    boot-windows \
+    nautilus-copy-path
 
 echo "::endgroup::"
 
