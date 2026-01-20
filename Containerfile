@@ -76,10 +76,10 @@ FROM quay.io/gnome_infrastructure/gnome-build-meta:gnomeos-nightly
 ##   - Files from @ublue-os/brew at /oci/brew
 ## Scripts are run in numerical order (10-build.sh, 20-example.sh, etc.)
 
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
+# RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    # --mount=type=cache,dst=/var/cache \
+    # --mount=type=cache,dst=/var/log \
+    # --mount=type=tmpfs,dst=/tmp \
     # /ctx/build/09-terra-mesa.sh && \
     # /ctx/build/10-build.sh
     
