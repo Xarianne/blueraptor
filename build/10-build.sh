@@ -50,6 +50,7 @@ dnf5 install -y \
   goverlay \
   mangohud \
   vkBasalt \
+  fish
 
 # Example using COPR with isolated pattern:
 # copr_install_isolated "ublue-os/staging" package-name
