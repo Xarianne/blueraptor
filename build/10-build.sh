@@ -46,10 +46,10 @@ echo "::group:: Install Packages"
 # Install packages using dnf5
 dnf5 install -y \
   firefox \
-  # goverlay \
-  # steam \
-  # mangohud \
-  # vkBasalt \
+  steam \
+  goverlay \
+  mangohud \
+  vkBasalt \
 
 # Example using COPR with isolated pattern:
 # copr_install_isolated "ublue-os/staging" package-name

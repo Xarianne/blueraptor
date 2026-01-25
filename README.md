@@ -1,4 +1,4 @@
-# Blueraptor
+# Bluewhale
 
 A template for building custom bootc operating system images based on the lessons from [Universal Blue](https://universal-blue.org/) and [Bluefin](https://projectbluefin.io). It is designed to be used manually, but is optimized to be bootstraped by GitHub Copilot. After set up you'll have your own custom Linux. 
 
@@ -118,7 +118,7 @@ All changes should be made via pull requests:
 
 Switch to your image:
 ```bash
-sudo bootc switch ghcr.io/xarianne/blueraptor:stable
+sudo bootc switch ghcr.io/xarianne/bluewhale:stable
 sudo systemctl reboot
 ```
 
