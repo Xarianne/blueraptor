@@ -18,8 +18,9 @@ echo "::group:: Install Hyprland"
 copr_install_isolated "sdegler/hyprland" \
     hyprland \
     xdg-desktop-portal-hyprland \
-    cliphist \
-    hyprland-contrib
+    hyprland-contrib \
+    hyprland-guiutils \
+    hyprqt6engine
 
 echo "::endgroup::"
 
@@ -31,7 +32,8 @@ copr_install_isolated "avengemedia/danklinux" \
     dsearch \
     matugen \
     khal \
-    ghostty
+    ghostty \
+    dms-greeter
 
 copr_install_isolated "avengemedia/dms" \
     dms 
