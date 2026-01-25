@@ -28,7 +28,10 @@ echo "::group:: Dank Material Shell"
 copr_install_isolated "avengemedia/danklinux" \
     quickshell \
     dgop \
-    dsearch
+    dsearch \
+    matugen \
+    khal \
+    ghostty
 
 copr_install_isolated "avengemedia/dms" \
     dms 
@@ -43,7 +46,4 @@ systemctl enable podman.socket
 
 echo "::endgroup::"
 
-# Restore default glob behavior
-shopt -u nullglob
-
-echo "Custom build complete!"
+echo "Hyprland with Dank Material Shell install complete!"
