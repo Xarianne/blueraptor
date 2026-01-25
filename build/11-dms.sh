@@ -20,7 +20,6 @@ copr_install_isolated "sdegler/hyprland" \
     xdg-desktop-portal-hyprland \
     hyprland-contrib \
     hyprland-guiutils \
-    hyprqt6engine
 
 echo "::endgroup::"
 
@@ -33,7 +32,6 @@ copr_install_isolated "avengemedia/danklinux" \
     matugen \
     khal \
     ghostty \
-    dms-greeter
 
 copr_install_isolated "avengemedia/dms" \
     dms 
