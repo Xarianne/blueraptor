@@ -64,7 +64,8 @@ dnf5 -y install --allowerasing \
     scx-scheds \
     scx-tools \
     scx-manager \
-    ananicy-cpp 
+    ananicy-cpp \
+    cachyos-ananicy-rules
 
 # 3. Disable the repo immediately to maintain the "isolated" pattern
 dnf5 -y copr disable bieszczaders/kernel-cachyos-addons
