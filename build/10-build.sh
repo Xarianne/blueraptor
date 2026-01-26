@@ -42,7 +42,6 @@ cp /ctx/custom/flatpaks/*.preinstall /etc/flatpak/preinstall.d/
 echo "::endgroup::"
 
 echo "::group:: Install Packages"
-
 # Install packages using dnf5
 dnf5 install -y \
   firefox \
@@ -52,16 +51,30 @@ dnf5 install -y \
   vkBasalt \
   fish
 
-# Example using COPR with isolated pattern:
-# copr_install_isolated "ublue-os/staging" package-name
-copr_install_isolated "bieszczaders/kernel-cachyos-addons" \
+echo "::endgroup::"
+
+echo "::group:: CachyOS Optimizations"
+# 1. Manually enable the repo
+dnf5 -y copr enable bieszczaders/kernel-cachyos-addons
+
+# 2. Perform the 'swap' manually with --allowerasing
+# This removes zram-generator-defaults and adds cachyos-settings in one go
+dnf5 -y install --allowerasing \
+    cachyos-settings \
     scx-scheds \
     scx-tools \
-    scx-manager 
+    scx-manager \
+    ananicy-cpp 
 
+# 3. Disable the repo immediately to maintain the "isolated" pattern
+dnf5 -y copr disable bieszczaders/kernel-cachyos-addons
+
+echo "::endgroup::"
+
+echo "::group:: Tools"
 copr_install_isolated "xariann/tools" \
     boot-windows \
-    nautilus-copy-path
+    nautilus-copy-path \
 
 echo "::endgroup::"
 
@@ -69,7 +82,8 @@ echo "::group:: System Configuration"
 
 # Enable/disable systemd services
 systemctl enable podman.socket
-# Example: systemctl mask unwanted-service
+systemctl enable ananicy-cpp.service
+systemctl enable scx_loader.service
 
 echo "::endgroup::"
 
