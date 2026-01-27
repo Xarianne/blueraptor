@@ -49,7 +49,8 @@ dnf5 install -y \
   goverlay \
   mangohud \
   vkBasalt \
-  fish
+  fish \
+  fastfetch
 
 echo "::endgroup::"
 
