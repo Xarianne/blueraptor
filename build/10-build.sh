@@ -65,6 +65,7 @@ echo "::group:: System Configuration"
 
 # Enable/disable systemd services
 systemctl enable podman.socket
+systemctl enable lactd.service
 
 echo "::endgroup::"
 
