@@ -44,9 +44,13 @@ echo "::endgroup::"
 echo "::group:: Install Packages"
 # Install packages using dnf5
 dnf5 install -y \
-  firefox \
   fish \
-  fastfetch
+
+echo "::endgroup::"
+
+echo "::group:: LACT"
+copr_install_isolated "ilyaz/LACT" \
+    lact
 
 echo "::endgroup::"
 
