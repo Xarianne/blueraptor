@@ -44,6 +44,7 @@ echo "::endgroup::"
 echo "::group:: Install Packages"
 # Install packages using dnf5
 dnf5 install -y \
+  fastfetch \
   fish \
 
 echo "::endgroup::"
